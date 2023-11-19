@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class ProceduralCubeGenerator : MonoBehaviour
 {
     // Start is called before the first frame update
