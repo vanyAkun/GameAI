@@ -5,32 +5,27 @@ using UnityEngine.AI;
 
 public class AgentController : MonoBehaviour
 {
-    public float spawnRadius = 10f;
+    NavMeshAgent Agent;
 
+    // Start is called before the first frame update
     void Start()
     {
-        Vector3 spawnPosition = transform.position; // Current position as the desired position
-        if (FindNearestNavMeshPoint(spawnPosition, out Vector3 nearestPosition, spawnRadius))
-        {
-            transform.position = nearestPosition;
-            // Additional setup for the agent
-        }
-        else
-        {
-            Debug.LogError("Failed to find a valid position on the NavMesh!");
-            // Handle the error (e.g., retry spawning, destroy the agent, etc.)
-        }
+        Agent = GetComponent<NavMeshAgent>();
     }
 
-    bool FindNearestNavMeshPoint(Vector3 sourcePosition, out Vector3 result, float maxDistance)
+    // Update is called once per frame
+    void Update()
     {
-        if (NavMesh.SamplePosition(sourcePosition, out NavMeshHit hit, maxDistance, NavMesh.AllAreas))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            result = hit.position;
-            return true;
-        }
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-        result = Vector3.zero;
-        return false;
+            if (Physics.Raycast(ray, out hit))
+            {
+                Agent.SetDestination(hit.point);
+            }
+
+        }
     }
 }
