@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 492e8b8fb5ff0fb41943e4cbea47bcb6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Player: {instanceID: 0}
+  - Bullet: {instanceID: 0}
+  - PatrolMaterial: {instanceID: 0}
+  - ChaseMaterial: {instanceID: 0}
+  - AttackMaterial: {instanceID: 0}
+  - RetreatMaterial: {instanceID: 0}
+  - bulletPosition: {instanceID: 0}
+  - bulletPrefab: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
