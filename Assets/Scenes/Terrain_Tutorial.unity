@@ -245,8 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab3901d058135a4b848f0feb4b0f811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Width: 50
-  Length: 50
+  Width: 65
+  Length: 65
   perlinFrequencyX: 0.1
   perlinFrequencyZ: 0.1
   perlinNoiseStrength: 7
