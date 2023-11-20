@@ -10,19 +10,20 @@ public class MapGeneratorEditor :   Editor
     {
         MapGenerator mapGen = (MapGenerator)target;
 
-        if(DrawDefaultInspector())
+        // Draw the default inspector. 
+        // Remove the redundant call to DrawDefaultInspector.
+        if (DrawDefaultInspector())
         {
-            if(mapGen.autoUpdate)
+            if (mapGen.autoUpdate)
             {
                 mapGen.GenerateMap();
             }
         }
 
-        DrawDefaultInspector();
-            if (GUILayout.Button("Generate"))
+        // Add a button to manually trigger map generation.
+        if (GUILayout.Button("Generate"))
         {
             mapGen.GenerateMap();
-
         }
     }
 }
