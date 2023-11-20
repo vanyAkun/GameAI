@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
@@ -24,6 +25,7 @@ public class MapGenerator : MonoBehaviour
     public Vector2 offset;
     public float meshHeightMultiplier;
     public AnimationCurve meshHeightCurve;
+    public NavMeshSurface navMeshSurface;
     public void GenerateMap()
     {
         float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight,seed, noiseScale,octaves,persistance,lacunarity,offset);
@@ -45,6 +47,10 @@ public class MapGenerator : MonoBehaviour
                     }
                 }
             }
+        }
+        if (navMeshSurface != null)
+        {
+            navMeshSurface.BuildNavMesh();
         }
 
         MapDisplay display = FindObjectOfType<MapDisplay>();
