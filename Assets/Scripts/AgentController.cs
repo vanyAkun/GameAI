@@ -59,7 +59,7 @@ public class AgentController : MonoBehaviour
 
             GameObject bullet = Instantiate(bulletPrefab, bulletPosition.position, Quaternion.identity);
 
-            bullet.GetComponent<BulletController>()?.InitializeBullet(transform.rotation * Vector3.forward);
+            bullet.GetComponent<Bullet>()?.InitializeBullet(transform.rotation * Vector3.forward);
 
         }
     }
@@ -68,7 +68,7 @@ public class AgentController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            BulletController bullet = collision.gameObject.GetComponent<BulletController>();
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
            // TakeDamage(bullet.damage);
         }
     }

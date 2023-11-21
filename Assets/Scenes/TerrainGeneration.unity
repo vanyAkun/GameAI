@@ -965,7 +965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 100
   fireRate: 1
-  bulletPrefab: {fileID: 93432912834787870, guid: 353066a4b011d8f4abb770050001b376, type: 3}
+  bulletPrefab: {fileID: 7821730813202215378, guid: 16ddb59c794fb4a4ca066046f14fed66, type: 3}
   bulletPosition: {fileID: 418553945}
   health: 100
   healthBar: {fileID: 0}
