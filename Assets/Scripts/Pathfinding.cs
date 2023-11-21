@@ -26,7 +26,7 @@ public class Pathfinding : MonoBehaviour
         HashSet<Node>closedSet = new HashSet<Node>();
         openSet.Add(startNode);
 
-        while(openSet.Count > 0)
+        while(openSet.Count > 0)//THIS IS THE SLOWEST, SO WE NEED TO OPTIMISE IT BABYYYYY
         {
             Node currentNode = openSet[0];
             for(int i=1;i<openSet.Count;i++)
