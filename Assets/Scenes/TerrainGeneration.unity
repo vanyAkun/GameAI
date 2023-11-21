@@ -339,6 +339,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 910176732671590627}
     - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
+      propertyPath: ChaseRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
+      propertyPath: AttackRange
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
       propertyPath: PatrolPoints.Array.data[0].x
       value: 200
       objectReference: {fileID: 0}
@@ -513,6 +521,14 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 910176732671590627}
+    - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
+      propertyPath: ChaseRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
+      propertyPath: AttackRange
+      value: 75
+      objectReference: {fileID: 0}
     - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
       propertyPath: PatrolPoints.Array.data[0].x
       value: -30
@@ -866,6 +882,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 910176732671590627}
     - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
+      propertyPath: ChaseRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
+      propertyPath: AttackRange
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
       propertyPath: PatrolPoints.Array.data[0].x
       value: -45
       objectReference: {fileID: 0}
@@ -978,9 +1002,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
+      propertyPath: Bullet
+      value: 
+      objectReference: {fileID: 8973435131353119131, guid: 16ddb59c794fb4a4ca066046f14fed66, type: 3}
+    - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
       propertyPath: Player
       value: 
       objectReference: {fileID: 910176732671590627}
+    - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
+      propertyPath: ChaseRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
+      propertyPath: AttackRange
+      value: 75
+      objectReference: {fileID: 0}
     - target: {fileID: 3755649905783443646, guid: ce8563d117e9f4f45ad5f0f3e1c15397, type: 3}
       propertyPath: PatrolPoints.Array.data[0].x
       value: 100
