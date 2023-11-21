@@ -786,7 +786,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unwalkableMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   gridWorldSize: {x: 500, y: 500}
   nodeRadius: 0.5
 --- !u!4 &1611481562
@@ -1510,7 +1510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5404419793971054886, guid: 1332e8d8c6e556c4e8064436f8378712, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5404419793971054886, guid: 1332e8d8c6e556c4e8064436f8378712, type: 3}
       propertyPath: m_LocalPosition.z
