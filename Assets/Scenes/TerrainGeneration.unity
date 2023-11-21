@@ -784,6 +784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9ea606beb205846856c10404a8b25e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 0}
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 128
@@ -1198,6 +1199,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 728900438}
+    - target: {fileID: 3985686174687581036, guid: 76a882c85c22ea047ab1ad355a591d99, type: 3}
+      propertyPath: m_DefaultArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3985686174687581036, guid: 76a882c85c22ea047ab1ad355a591d99, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 18e4f90d0d8438d4686e4c3a9513a181, type: 2}
     - target: {fileID: 4959093292746542594, guid: 76a882c85c22ea047ab1ad355a591d99, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1248,7 +1257,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7921433976512588793, guid: 76a882c85c22ea047ab1ad355a591d99, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921433976512588793, guid: 76a882c85c22ea047ab1ad355a591d99, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1469,7 +1482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6579714462623027940, guid: fbf79c82de11f4d44937e154ae780852, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7000149952812370937, guid: fbf79c82de11f4d44937e154ae780852, type: 3}
       propertyPath: meshFilter
