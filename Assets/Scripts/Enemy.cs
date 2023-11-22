@@ -18,8 +18,7 @@ public class Enemy : MonoBehaviour
 
     public Slider healthBar;
 
-    public delegate void EnemyKilled();
-    public static event EnemyKilled OnEnemyKilled;
+ 
 
 
 
@@ -61,17 +60,7 @@ public class Enemy : MonoBehaviour
 
         healthBar.value = health / 100f;
 
-        if (health < 0) 
-        {
-            EnemyDied();
-        }
     }
 
-    void EnemyDied()
-    {
-        gameObject.SetActive(false);
 
-        if (OnEnemyKilled != null)
-            OnEnemyKilled.Invoke();
-    }
 }

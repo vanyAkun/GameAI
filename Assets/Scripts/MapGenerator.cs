@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
@@ -24,6 +25,18 @@ public class MapGenerator : MonoBehaviour
     public Vector2 offset;
     public float meshHeightMultiplier;
     public AnimationCurve meshHeightCurve;
+
+    public NavMeshSurface navMeshSurface;
+    public MeshCollider meshCollider;
+    public MeshFilter meshFilter;
+    private void Awake()
+    {
+       navMeshSurface = GetComponent<NavMeshSurface>();
+        meshCollider = GetComponent<MeshCollider>();
+
+        meshFilter = GetComponent<MeshFilter>();
+        meshCollider.sharedMesh = meshFilter.sharedMesh;
+    }
     public void GenerateMap()
     {
         float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight,seed, noiseScale,octaves,persistance,lacunarity,offset);
@@ -60,7 +73,7 @@ public class MapGenerator : MonoBehaviour
         }
         else if (drawMode == DrawMode.Mesh)
         {
-            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap,meshHeightMultiplier,meshHeightCurve), TextureGenerator.TextureFromColourMap(colourMap, mapWidth, mapHeight));
+            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap,meshHeightMultiplier,meshHeightCurve,meshCollider), TextureGenerator.TextureFromColourMap(colourMap, mapWidth, mapHeight));
         }
     }
     private void OnValidate()
