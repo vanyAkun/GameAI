@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class Pathfinding : MonoBehaviour {
 
@@ -84,6 +85,20 @@ public class Pathfinding : MonoBehaviour {
 			return 14*dstY + 10* (dstX-dstY);
 		return 14*dstX + 10 * (dstY-dstX);
 	}
-
+    public void MoveToTarget()
+    {
+        if (currentTarget != null)
+        {
+            var agent = seeker.GetComponent<NavMeshAgent>();
+            if (agent != null)
+            {
+                agent.SetDestination(currentTarget.position);
+            }
+            else
+            {
+                Debug.LogError("NavMeshAgent component not found on the seeker");
+            }
+        }
+    }
 
 }
