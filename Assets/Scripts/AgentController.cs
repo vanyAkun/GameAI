@@ -30,23 +30,26 @@ public class AgentController : MonoBehaviour
     }
     void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput);
-        movementDirection = movement.normalized;
-
-        if (horizontalInput != 0 || verticalInput != 0)
-        {
-            transform.LookAt(transform.position + movementDirection);
-            agent.Move(movement * movementSpeed * Time.deltaTime);
-        }
+        HandleMovementInput();
         if (health <= 0)
         {
             Respawn();
         }
     }
+    private void HandleMovementInput()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
+        if (horizontalInput != 0 || verticalInput != 0)
+        {
+            Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput);
+            Vector3 movementDirection = movement.normalized;
+
+            transform.LookAt(transform.position + movementDirection);
+            agent.Move(movement * movementSpeed * Time.deltaTime);
+        }
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
