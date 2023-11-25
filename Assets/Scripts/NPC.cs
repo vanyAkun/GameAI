@@ -1,49 +1,50 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
+using UnityEngine.UI;
+
 
 public class NPC : MonoBehaviour
 {
+    public TextMeshProUGUI stateText;
+    public TextMeshProUGUI healthText;
+    public string npcID = "NPC";
     public enum NPCStates
     {
         Patrol,
         Chase,
         Attack,
-        Retreat
+        Retreat,
+        HealRetreat
     }
 
-    [SerializeField]
-    Vector3[] PatrolPoints;
-    [SerializeField]
-    Transform Player;
-    [SerializeField]
-    Bullet Bullet;
-    [SerializeField]
-    Material PatrolMaterial;
-    [SerializeField]
-    Material ChaseMaterial;
-    [SerializeField]
-    Material AttackMaterial;
-    [SerializeField]
-    Material RetreatMaterial;
-    [SerializeField]
-    float ChaseRange = 7f;
-    [SerializeField]
-    float AttackRange = 4f;
+    [SerializeField] Vector3[] PatrolPoints;
+    [SerializeField]Transform Player;
+    [SerializeField] Bullet Bullet;
+    [SerializeField] Material PatrolMaterial;
+    [SerializeField] Material ChaseMaterial;
+    [SerializeField] Material AttackMaterial;
+    [SerializeField] Material RetreatMaterial;
+    [SerializeField] float ChaseRange = 7f;
+    [SerializeField] float AttackRange = 4f;
 
-    float FireRate = 2f;
+ 
     int nextPatrolPoint = 0;
     NPCStates currentState = NPCStates.Patrol;
     NavMeshAgent navMeshAgent;
     MeshRenderer meshRenderer;
 
-    float nextShootTime = 0;
-
+    float nextFire;
+   
+    float FireRate = 1f;
     public Transform bulletPosition;
     public GameObject bulletPrefab;
+    public int health = 100;
+
+   
 
     void Start()
     {
@@ -56,13 +57,39 @@ public class NPC : MonoBehaviour
     
     void Update()
     {
-        SwitchState();
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+            return; // Ensure no further code is executed after destruction
+        }
+
+        if (health <= 20 && currentState != NPCStates.HealRetreat)
+        {
+            currentState = NPCStates.HealRetreat;
+        }
+        else
+        {
+            SwitchState(); // Use the probability-based method
+        }
+
+        UpdateStateText();
+        if (stateText != null)
+        {
+            stateText.text = $"{npcID} State: {currentState}";
+            Debug.Log("Updated Text: " + stateText.text);
+            if (healthText != null)
+            {
+                healthText.text = "HP " + health;
+            }
+        }
+    
     }
+
     void Fire()
     {
-        if (Time.time > nextShootTime)
+        if (Time.time > nextFire)
         {
-            nextShootTime = Time.time + FireRate;
+            nextFire = Time.time + FireRate;
 
             GameObject bullet = Instantiate(bulletPrefab, bulletPosition.position, Quaternion.identity);
             bullet.GetComponent<Bullet>()?.InitializeBullet(transform.rotation * Vector3.forward);
@@ -81,6 +108,9 @@ public class NPC : MonoBehaviour
                 break;
             case NPCStates.Attack:
                 Attack();
+                break;
+            case NPCStates.HealRetreat:
+                HealRetreat();
                 break;
             case NPCStates.Retreat:
                 Retreat();
@@ -175,12 +205,75 @@ public class NPC : MonoBehaviour
         // Debugging
         Debug.Log("Retreating to point: " + farthestPointIndex);
     }
+    private void HealRetreat()
+    {
+        int farthestPointIndex = 0;
+        float maxDistance = 0;
+        for (int i = 0; i < PatrolPoints.Length; i++)
+        {
+            float distance = Vector3.Distance(PatrolPoints[i], Player.position);
+            if (distance > maxDistance)
+            {
+                maxDistance = distance;
+                farthestPointIndex = i;
+            }
+        }
+
+        // Set the destination to the farthest patrol point
+        navMeshAgent.isStopped = false;
+        navMeshAgent.SetDestination(PatrolPoints[farthestPointIndex]);
+        meshRenderer.material = RetreatMaterial; // You can choose to have a different material for HealRetreat if you like
+
+        // Check if NPC has reached the retreat point and heal if necessary
+        if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance < 0.5f)
+        {
+            if (health < 100)
+            {
+                health++; // Slowly regenerate health
+            }
+            else
+            {
+                currentState = NPCStates.Patrol; // Return to patrol once healed
+                meshRenderer.material = PatrolMaterial; // Reset material to patrol material
+            }
+        }
+    }
+    private void UpdateStateText()
+    {
+        if (stateText != null)
+        {
+            stateText.text = $" State: {currentState}";
+            Debug.Log("Updated Text: " + stateText.text); // Debugging line
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")) // Make sure the player has a tag "Player"
+        if (other.gameObject.CompareTag("Seeker")) // Make sure the player has a tag "Player"
         {
             currentState = NPCStates.Retreat; // Change state to Retreat
         }
+    
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+            TakeDamage(bullet.damage);
+        }
+    }
+    void TakeDamage(int damage)
+    {
+        Debug.Log("Damage Taken: " + damage);
+        health -= damage;
+        Debug.Log("New Health: " + health);
+        if (healthText != null)
+        {
+            healthText.text = "HP " + health;
+        }
+
+       
     }
 }
 
