@@ -29,6 +29,15 @@ public class MapGenerator : MonoBehaviour
     public NavMeshSurface navMeshSurface;
     public MeshCollider meshCollider;
     public MeshFilter meshFilter;
+
+    public GameObject heartPrefab;
+    public GameObject starPrefab;
+    public GameObject treePrefab;
+    public GameObject gemPrefab;
+    public GameObject enemyGemPrefab;
+    public GameObject chestPrefab;
+
+
     private void Awake()
     {
        navMeshSurface = GetComponent<NavMeshSurface>();
