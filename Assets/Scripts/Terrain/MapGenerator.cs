@@ -43,6 +43,7 @@ public class MapGenerator : MonoBehaviour
     public int TreeAmount = 10;
     public int GemAmount = 3;
     public int StarAmount = 7;
+    private Vector3 playerSpawnPosition;
 
 
 
@@ -56,10 +57,10 @@ public class MapGenerator : MonoBehaviour
         SpawnPlayerOnTerrain();
         float minDistance = 5f;
         float maxDistance = 15f;// Adjust this value as needed
-        SpawnItemOnTerrain(heartPrefab, HeartAmount, "Heart", minDistance   , maxDistance);
-        SpawnItemOnTerrain(treePrefab, TreeAmount, "Tree", minDistance, maxDistance);
-        SpawnItemOnTerrain(gemPrefab, GemAmount, "Gem", minDistance, maxDistance);
-        SpawnItemOnTerrain(starPrefab, StarAmount, "Star", minDistance, maxDistance);
+        SpawnItemOnTerrain(heartPrefab, HeartAmount, "Heart", minDistance);
+        SpawnItemOnTerrain(treePrefab, TreeAmount, "Tree", minDistance);
+        SpawnItemOnTerrain(gemPrefab, GemAmount, "Gem", minDistance);
+        SpawnItemOnTerrain(starPrefab, StarAmount, "Star", minDistance);
     }
     public void GenerateMap()
     {
@@ -114,16 +115,19 @@ public class MapGenerator : MonoBehaviour
         // Spawn the player at the calculated position
         Vector3 spawnPosition = new Vector3(x, y, z);
         Instantiate(player, spawnPosition, Quaternion.identity);
+        playerSpawnPosition = spawnPosition;
     }
-    private void SpawnItemOnTerrain(GameObject itemPrefab, int amount, string tag, float minDistance, float maxDistance)
+    private void SpawnItemOnTerrain(GameObject itemPrefab, int amount, string tag, float minDistance)
     {
         for (int i = 0; i < amount; i++)
         {
             bool tooClose;
+            bool isAccessible;
             Vector3 spawnPosition;
             do
             {
                 tooClose = false;
+                isAccessible = false;
                 float x = Random.Range(-26f, 26f);
                 float z = Random.Range(-26f, 26f);
                 float y = GetTerrainHeightAtPoint(x, z);
@@ -137,12 +141,24 @@ public class MapGenerator : MonoBehaviour
                         break;
                     }
                 }
-            }
-            while (tooClose); // Repeat the loop until a suitable position is found
 
-            Instantiate(itemPrefab, spawnPosition, Quaternion.identity);
+                // Check if spawnPosition is on the NavMesh
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(spawnPosition, out hit, 1.0f, NavMesh.AllAreas))
+                {
+                    spawnPosition = hit.position;
+                    isAccessible = true;
+                }
+
+            }
+            while (tooClose || !isAccessible); // Repeat the loop until a suitable position is found
+            GameObject spawnedItem = Instantiate(itemPrefab, spawnPosition, Quaternion.identity);
+
+            // Draw a debug line from the player to the spawned item
+            Debug.DrawLine(playerSpawnPosition, spawnedItem.transform.position, Color.blue, 10f);
         }
     }
+
     private float GetTerrainHeightAtPoint(float x, float z)
 {
     Vector3 rayStart = new Vector3(x, 1000f, z);
