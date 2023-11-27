@@ -53,10 +53,11 @@ public class MapGenerator : MonoBehaviour
         meshFilter = GetComponent<MeshFilter>();
         meshCollider.sharedMesh = meshFilter.sharedMesh;
         SpawnPlayerOnTerrain();
-        SpawnItemOnTerrain(heartPrefab, HeartAmount);
-        SpawnItemOnTerrain(treePrefab, TreeAmount);
-        SpawnItemOnTerrain(gemPrefab, GemAmount);
-        SpawnItemOnTerrain(starPrefab, StarAmount);
+        float minDistance = 5f; // Adjust this value as needed
+        SpawnItemOnTerrain(heartPrefab, HeartAmount, "Heart", minDistance);
+        SpawnItemOnTerrain(treePrefab, TreeAmount, "Tree", minDistance);
+        SpawnItemOnTerrain(gemPrefab, GemAmount, "Gem", minDistance);
+        SpawnItemOnTerrain(starPrefab, StarAmount, "Star", minDistance);
     }
     public void GenerateMap()
     {
@@ -112,15 +113,31 @@ public class MapGenerator : MonoBehaviour
         Vector3 spawnPosition = new Vector3(x, y, z);
         Instantiate(player, spawnPosition, Quaternion.identity);
     }
-    private void SpawnItemOnTerrain(GameObject itemPrefab, int amount)
+    private void SpawnItemOnTerrain(GameObject itemPrefab, int amount, string tag, float minDistance)
     {
         for (int i = 0; i < amount; i++)
         {
-            float x = Random.Range(-26f, 26f);
-            float z = Random.Range(-26f, 26f);
-            float y = GetTerrainHeightAtPoint(x, z);
+            bool tooClose;
+            Vector3 spawnPosition;
+            do
+            {
+                tooClose = false;
+                float x = Random.Range(-26f, 26f);
+                float z = Random.Range(-26f, 26f);
+                float y = GetTerrainHeightAtPoint(x, z);
+                spawnPosition = new Vector3(x, y, z);
 
-            Vector3 spawnPosition = new Vector3(x, y, z);
+                foreach (GameObject item in GameObject.FindGameObjectsWithTag(tag))
+                {
+                    if (Vector3.Distance(item.transform.position, spawnPosition) < minDistance)
+                    {
+                        tooClose = true;
+                        break;
+                    }
+                }
+            }
+            while (tooClose); // Repeat the loop until a suitable position is found
+
             Instantiate(itemPrefab, spawnPosition, Quaternion.identity);
         }
     }
