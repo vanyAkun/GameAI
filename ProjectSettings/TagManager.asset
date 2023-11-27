@@ -6,11 +6,6 @@ TagManager:
   tags:
   - Seeker
   - Bullet
-  - Target
-  - Gem
-  - Tree
-  - Heart
-  - Star
   layers:
   - Default
   - TransparentFX
@@ -20,7 +15,7 @@ TagManager:
   - UI
   - Player
   - Unwakable
-  - TerrainLayer
+  - 
   - 
   - 
   - 
