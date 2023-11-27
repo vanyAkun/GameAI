@@ -33,11 +33,16 @@ public class MapGenerator : MonoBehaviour
 
     public GameObject player;
     public GameObject NPC;
+
     public GameObject heartPrefab;
     public GameObject starPrefab;
     public GameObject treePrefab;
     public GameObject gemPrefab;
-   
+    public int HeartAmount = 5;
+    public int TreeAmount = 10;
+    public int GemAmount = 3;
+    public int StarAmount = 7;
+
 
 
     private void Awake()
@@ -48,10 +53,10 @@ public class MapGenerator : MonoBehaviour
         meshFilter = GetComponent<MeshFilter>();
         meshCollider.sharedMesh = meshFilter.sharedMesh;
         SpawnPlayerOnTerrain();
-        SpawnItemOnTerrain(heartPrefab, "Heart");
-        SpawnItemOnTerrain(treePrefab, "Tree");
-        SpawnItemOnTerrain(gemPrefab, "Gem");
-        SpawnItemOnTerrain(starPrefab, "Star");
+        SpawnItemOnTerrain(heartPrefab, HeartAmount);
+        SpawnItemOnTerrain(treePrefab, TreeAmount);
+        SpawnItemOnTerrain(gemPrefab, GemAmount);
+        SpawnItemOnTerrain(starPrefab, StarAmount);
     }
     public void GenerateMap()
     {
@@ -107,18 +112,17 @@ public class MapGenerator : MonoBehaviour
         Vector3 spawnPosition = new Vector3(x, y, z);
         Instantiate(player, spawnPosition, Quaternion.identity);
     }
-    private void SpawnItemOnTerrain(GameObject itemPrefab, string tag)
+    private void SpawnItemOnTerrain(GameObject itemPrefab, int amount)
     {
-        // Randomly choose a position within the specified range
-        float x = Random.Range(-26f, 26f); // Range for x coordinate
-        float z = Random.Range(-26f, 26f); // Range for z coordinate
+        for (int i = 0; i < amount; i++)
+        {
+            float x = Random.Range(-26f, 26f);
+            float z = Random.Range(-26f, 26f);
+            float y = GetTerrainHeightAtPoint(x, z);
 
-        // Get the terrain height at this point
-        float y = GetTerrainHeightAtPoint(x, z);
-
-        // Spawn the item at the calculated position
-        Vector3 spawnPosition = new Vector3(x, y, z);
-        Instantiate(itemPrefab, spawnPosition, Quaternion.identity);
+            Vector3 spawnPosition = new Vector3(x, y, z);
+            Instantiate(itemPrefab, spawnPosition, Quaternion.identity);
+        }
     }
     private float GetTerrainHeightAtPoint(float x, float z)
 {
