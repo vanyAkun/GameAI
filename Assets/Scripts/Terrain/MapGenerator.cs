@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -31,7 +31,7 @@ public class MapGenerator : MonoBehaviour
     public MeshCollider meshCollider;
     public MeshFilter meshFilter;
 
-
+    public GameObject player;
     public GameObject heartPrefab;
     public GameObject starPrefab;
     public GameObject treePrefab;
@@ -55,7 +55,7 @@ public class MapGenerator : MonoBehaviour
 
         meshFilter = GetComponent<MeshFilter>();
         meshCollider.sharedMesh = meshFilter.sharedMesh;
-
+        player = GameObject.FindWithTag("Seeker");
         HeartsSpawn();
         StarsSpawn();
         TreesSpawn();
@@ -124,59 +124,71 @@ public class MapGenerator : MonoBehaviour
     }
     private void HeartsSpawn()
     {
-        SpawnItems(nOfHearts, heartPrefab, "Heart");
+        SpawnItems(nOfHearts, heartPrefab, "Heart", player.transform.position);
     }
     private void StarsSpawn()
     {
-        SpawnItems(nOfStars, starPrefab, "Star");
+        SpawnItems(nOfStars, starPrefab, "Star", player.transform.position);
     }
 
     private void TreesSpawn()
     {
-        SpawnItems(nOfTrees, treePrefab, "Tree");
+        SpawnItems(nOfTrees, treePrefab, "Tree", player.transform.position);
     }
 
     private void GemsSpawn()
     {
-        SpawnItems(nOfGems, gemPrefab, "Gem");
+        SpawnItems(nOfGems, gemPrefab, "Gem", player.transform.position);
     }
 
-    private void SpawnItems(int numberOfItems, GameObject prefab, string tag)
+    private void SpawnItems(int numberOfItems, GameObject prefab, string tag, Vector3 playerPosition)
     {
+        NavMeshPath path = new NavMeshPath();
+
         for (int i = 0; i < numberOfItems; i++)
         {
-            bool itemTooClose;
+            bool itemTooCloseOrInaccessible;
             Vector3 itemPosition;
 
             do
             {
-                itemTooClose = false;
+                itemTooCloseOrInaccessible = false;
                 float randomX = Random.Range(-26f, 26f);
                 float randomZ = Random.Range(-26f, 26f);
-
-                // Calculate the correct height at the position
                 float height = TerrainHeightAtPoint(randomX, randomZ);
-
-                // Use this height for the y-coordinate
                 itemPosition = new Vector3(randomX, height, randomZ);
 
+                // Check distance from other items
                 foreach (GameObject item in GameObject.FindGameObjectsWithTag(tag))
                 {
                     if (Vector3.Distance(item.transform.position, itemPosition) < minDistance)
                     {
-                        itemTooClose = true;
+                        itemTooCloseOrInaccessible = true;
                         break;
                     }
                 }
-            } while (itemTooClose);
+
+                if (!itemTooCloseOrInaccessible)
+                {
+                    NavMesh.CalculatePath(playerPosition, itemPosition, NavMesh.AllAreas, path);
+                    if (path.status == NavMeshPathStatus.PathComplete)
+                    {
+                        // Draw the path for debugging
+                        for (int j = 0; j < path.corners.Length - 1; j++)
+                            Debug.DrawLine(path.corners[j], path.corners[j + 1], Color.green, 10.0f, false);
+                    }
+                    else
+                    {
+                        itemTooCloseOrInaccessible = true;
+                    }
+                }
+            } while (itemTooCloseOrInaccessible);
 
             Instantiate(prefab, itemPosition, Quaternion.identity);
         }
+
     }
-
-
-
-    private float TerrainHeightAtPoint(float x, float z)
+        private float TerrainHeightAtPoint(float x, float z)
     {
         RaycastHit hit;
         float y = 0;
