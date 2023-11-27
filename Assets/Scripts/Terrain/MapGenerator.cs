@@ -48,6 +48,10 @@ public class MapGenerator : MonoBehaviour
         meshFilter = GetComponent<MeshFilter>();
         meshCollider.sharedMesh = meshFilter.sharedMesh;
         SpawnPlayerOnTerrain();
+        SpawnItemOnTerrain(heartPrefab, "Heart");
+        SpawnItemOnTerrain(treePrefab, "Tree");
+        SpawnItemOnTerrain(gemPrefab, "Gem");
+        SpawnItemOnTerrain(starPrefab, "Star");
     }
     public void GenerateMap()
     {
@@ -102,6 +106,19 @@ public class MapGenerator : MonoBehaviour
         // Spawn the player at the calculated position
         Vector3 spawnPosition = new Vector3(x, y, z);
         Instantiate(player, spawnPosition, Quaternion.identity);
+    }
+    private void SpawnItemOnTerrain(GameObject itemPrefab, string tag)
+    {
+        // Randomly choose a position within the specified range
+        float x = Random.Range(-26f, 26f); // Range for x coordinate
+        float z = Random.Range(-26f, 26f); // Range for z coordinate
+
+        // Get the terrain height at this point
+        float y = GetTerrainHeightAtPoint(x, z);
+
+        // Spawn the item at the calculated position
+        Vector3 spawnPosition = new Vector3(x, y, z);
+        Instantiate(itemPrefab, spawnPosition, Quaternion.identity);
     }
     private float GetTerrainHeightAtPoint(float x, float z)
 {
