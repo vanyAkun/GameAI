@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Seeker
   - Bullet
+  - Target
+  - Tree
+  - Chest
+  - Gem
+  - Star
+  - EnemyStar
+  - Heart
   layers:
   - Default
   - TransparentFX

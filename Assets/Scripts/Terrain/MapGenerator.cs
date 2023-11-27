@@ -34,9 +34,18 @@ public class MapGenerator : MonoBehaviour
     public GameObject starPrefab;
     public GameObject treePrefab;
     public GameObject gemPrefab;
-    public GameObject enemyGemPrefab;
+    public GameObject enemyStarPrefab;
     public GameObject chestPrefab;
 
+    public int nOfHearts = 5;
+    public int nOfStars = 5;
+    public int nOfTrees = 10;
+    public int nOfGems = 5;
+    public int nOfEnemyStars = 5;
+    public int nOfChests = 5;
+
+    public float minDistance = 10f;
+    public float maxDistance = 25f;
 
     private void Awake()
     {
@@ -45,7 +54,16 @@ public class MapGenerator : MonoBehaviour
 
         meshFilter = GetComponent<MeshFilter>();
         meshCollider.sharedMesh = meshFilter.sharedMesh;
+
+        HeartsSpawn();
+        StarsSpawn();
+        TreesSpawn();
+        GemsSpawn();
+        EnemyStarSpawn();
+        ChestSpawn();
     }
+
+
     public void GenerateMap()
     {
         float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight,seed, noiseScale,octaves,persistance,lacunarity,offset);
@@ -102,6 +120,156 @@ public class MapGenerator : MonoBehaviour
         if(octaves<0)
         {
             octaves = 0;
+        }
+    }
+    private void TreesSpawn()
+    {
+        for (int i = 0; i < nOfTrees; i++)
+        {
+            bool ItemTooClose = false;
+            float randomX = Random.Range(0f, mapWidth);
+            float randomY = Random.Range(0f, mapHeight);
+            Vector3 randomPosition = new Vector3(randomX, 0f, randomY);
+
+            foreach (GameObject tree in GameObject.FindGameObjectsWithTag("Tree"))
+            {
+                if (Vector3.Distance(tree.transform.position, randomPosition) < minDistance)
+                {
+                    ItemTooClose = true;
+                    break;
+                }
+            }
+
+            if (!ItemTooClose)
+            {
+                Vector3 treePosition = new Vector3(randomX, SampleTerrain(randomX, randomY), randomY);
+                Instantiate(treePrefab, treePosition, Quaternion.identity);
+            }
+        }
+    }
+    private void HeartsSpawn()
+    {
+        for (int i = 0; i < nOfHearts; i++)
+        {
+            float randomX = Random.Range(0f, mapWidth);
+            float randomY = Random.Range(0f, mapHeight);
+            Vector3 randomPosition = new Vector3(randomX, 0f, randomY);
+
+            bool ItemTooClose = false;
+            foreach (GameObject heart in GameObject.FindGameObjectsWithTag("Heart"))
+            {
+                if (Vector3.Distance(heart.transform.position, randomPosition) < minDistance)
+                {
+                    ItemTooClose = true;
+                    break;
+                }
+            }
+
+            if (!ItemTooClose)
+            {
+                Vector3 heartPosition = new Vector3(randomX, SampleTerrain(randomX, randomY), randomY);
+                Instantiate(heartPrefab, heartPosition, Quaternion.identity);
+            }
+        }
+    }
+    private void StarsSpawn()
+    {
+        for (int i = 0; i < nOfStars; i++)
+        {
+            float randomX = Random.Range(0f, mapWidth);
+            float randomY = Random.Range(0f, mapHeight);
+            Vector3 randomPosition = new Vector3(randomX, 0f, randomY);
+
+            bool ItemTooClose = false;
+            foreach (GameObject star in GameObject.FindGameObjectsWithTag("Star"))
+            {
+                if (Vector3.Distance(star.transform.position, randomPosition) < minDistance)
+                {
+                    ItemTooClose = true;
+                    break;
+                }
+            }
+
+            if (!ItemTooClose)
+            {
+                Vector3 starPosition = new Vector3(randomX, SampleTerrain(randomX, randomY), randomY);
+                Instantiate(starPrefab, starPosition, Quaternion.identity);
+            }
+        }
+    }
+    private void GemsSpawn()
+    {
+        for (int i = 0; i < nOfGems; i++)
+        {
+            float randomX = Random.Range(0f, mapWidth);
+            float randomY = Random.Range(0f, mapHeight);
+            Vector3 randomPosition = new Vector3(randomX, 0f, randomY);
+
+            bool ItemTooClose = false;
+            foreach (GameObject gem in GameObject.FindGameObjectsWithTag("Gem"))
+            {
+                if (Vector3.Distance(gem.transform.position, randomPosition) < minDistance)
+                {
+                    ItemTooClose = true;
+                    break;
+                }
+            }
+
+            if (!ItemTooClose)
+            {
+                Vector3 gemPosition = new Vector3(randomX, SampleTerrain(randomX, randomY), randomY);
+                Instantiate(gemPrefab, gemPosition, Quaternion.identity);
+            }
+        }
+    }
+    private void EnemyStarSpawn()
+    {
+        for (int i = 0; i < nOfEnemyStars; i++)
+        {
+            float randomX = Random.Range(0f, mapWidth);
+            float randomY = Random.Range(0f, mapHeight);
+            Vector3 randomPosition = new Vector3(randomX, 0f, randomY);
+
+            bool ItemTooClose = false;
+            foreach (GameObject enemyStar in GameObject.FindGameObjectsWithTag("EnemyStar"))
+            {
+                if (Vector3.Distance(enemyStar.transform.position, randomPosition) < minDistance)
+                {
+                    ItemTooClose = true;
+                    break;
+                }
+            }
+
+            if (!ItemTooClose)
+            {
+                Vector3 enemyStarPosition = new Vector3(randomX, SampleTerrain(randomX, randomY), randomY);
+                Instantiate(enemyStarPrefab, enemyStarPosition, Quaternion.identity);
+            }
+        }
+    }
+    private void ChestSpawn()
+    {
+        for (int i = 0; i < nOfChests; i++)
+        {
+            float randomX = Random.Range(0f, mapWidth);
+            float randomY = Random.Range(0f, mapHeight);
+            Vector3 randomPosition = new Vector3(randomX, 0f, randomY);
+
+            bool ItemTooClose = false;
+            foreach (GameObject chest in GameObject.FindGameObjectsWithTag("Chest"))
+            {
+                if (Vector3.Distance(chest.transform.position, randomPosition) < minDistance)
+                {
+                    ItemTooClose = true;
+                    break;
+                }
+            }
+
+            if (!ItemTooClose)
+            {
+                Vector3 chestPosition = new Vector3(randomX, SampleTerrain(randomX, randomY), randomY);
+                Instantiate(chestPrefab, chestPosition, Quaternion.identity);
+            }
         }
     }
 }
