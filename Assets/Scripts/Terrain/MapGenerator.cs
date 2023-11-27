@@ -86,29 +86,42 @@ public class MapGenerator : MonoBehaviour
         {
             display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap,meshHeightMultiplier,meshHeightCurve,meshCollider), TextureGenerator.TextureFromColourMap(colourMap, mapWidth, mapHeight));
         }
+
+        SpawnPlayerOnTerrain();
+    }
+    private void SpawnPlayerOnTerrain()
+    {
+        // Choose a position to spawn the player (example: center of the map)
+        float x = mapWidth / 2f;
+        float z = mapHeight / 2f;
+        float y = GetTerrainHeightAtPoint(x, z);
+
+        // Spawn the player at the calculated position
+        Vector3 spawnPosition = new Vector3(x, y, z);
+        Instantiate(player, spawnPosition, Quaternion.identity);
     }
     private float GetTerrainHeightAtPoint(float x, float z)
+{
+    Vector3 rayStart = new Vector3(x, 1000f, z);
+    RaycastHit hit;
+
+    // Debugging line: Red if the ray doesn't hit the terrain, green if it does
+    Color debugLineColor = Color.red;
+
+    if (Physics.Raycast(rayStart, Vector3.down, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain")))
     {
-        Vector3 rayStart = new Vector3(x, 1000f, z);
-        RaycastHit hit;
-
-        // Debugging line: Red if the ray doesn't hit the terrain, green if it does
-        Color debugLineColor = Color.red;
-
-        if (Physics.Raycast(rayStart, Vector3.down, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain")))
-        {
-            debugLineColor = Color.green;
-            // Draw a line to show where the raycast hits the terrain
-            Debug.DrawLine(rayStart, hit.point, debugLineColor, 2f);
-            return hit.point.y;
-        }
-        else
-        {
-            // Draw a ray to show the raycast direction
-            Debug.DrawRay(rayStart, Vector3.down * 1000f, debugLineColor, 2f);
-            return 0f;
-        }
+        debugLineColor = Color.green;
+        // Draw a line to show where the raycast hits the terrain
+        Debug.DrawLine(rayStart, hit.point, debugLineColor, 2f);
+        return hit.point.y;
     }
+    else
+    {
+        // Draw a ray to show the raycast direction
+        Debug.DrawRay(rayStart, Vector3.down * 1000f, debugLineColor, 2f);
+        return 0f;
+    }
+}
     private void OnValidate()
     {
         if (mapWidth <1)
