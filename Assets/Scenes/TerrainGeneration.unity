@@ -1748,7 +1748,7 @@ PrefabInstance:
       objectReference: {fileID: 1761358054}
     - target: {fileID: 2206895086310158254, guid: 76a882c85c22ea047ab1ad355a591d99, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3985686174687581036, guid: 76a882c85c22ea047ab1ad355a591d99, type: 3}
       propertyPath: m_DefaultArea
@@ -1817,6 +1817,10 @@ PrefabInstance:
     - target: {fileID: 7921433976512588793, guid: 76a882c85c22ea047ab1ad355a591d99, type: 3}
       propertyPath: m_Name
       value: Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921433976512588793, guid: 76a882c85c22ea047ab1ad355a591d99, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7921433976512588793, guid: 76a882c85c22ea047ab1ad355a591d99, type: 3}
       propertyPath: m_IsActive
@@ -2106,6 +2110,10 @@ PrefabInstance:
       value: MapGenerator
       objectReference: {fileID: 0}
     - target: {fileID: 6579714462623027940, guid: fbf79c82de11f4d44937e154ae780852, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579714462623027940, guid: fbf79c82de11f4d44937e154ae780852, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -2143,6 +2151,10 @@ PrefabInstance:
     - target: {fileID: 1400931123150454799, guid: 1332e8d8c6e556c4e8064436f8378712, type: 3}
       propertyPath: m_Name
       value: Plane
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400931123150454799, guid: 1332e8d8c6e556c4e8064436f8378712, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1400931123150454799, guid: 1332e8d8c6e556c4e8064436f8378712, type: 3}
       propertyPath: m_IsActive
