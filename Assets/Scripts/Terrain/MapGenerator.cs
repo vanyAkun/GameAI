@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.AI.Navigation;
+
 using UnityEditor.EditorTools;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -53,11 +54,12 @@ public class MapGenerator : MonoBehaviour
         meshFilter = GetComponent<MeshFilter>();
         meshCollider.sharedMesh = meshFilter.sharedMesh;
         SpawnPlayerOnTerrain();
-        float minDistance = 5f; // Adjust this value as needed
-        SpawnItemOnTerrain(heartPrefab, HeartAmount, "Heart", minDistance);
-        SpawnItemOnTerrain(treePrefab, TreeAmount, "Tree", minDistance);
-        SpawnItemOnTerrain(gemPrefab, GemAmount, "Gem", minDistance);
-        SpawnItemOnTerrain(starPrefab, StarAmount, "Star", minDistance);
+        float minDistance = 5f;
+        float maxDistance = 15f;// Adjust this value as needed
+        SpawnItemOnTerrain(heartPrefab, HeartAmount, "Heart", minDistance   , maxDistance);
+        SpawnItemOnTerrain(treePrefab, TreeAmount, "Tree", minDistance, maxDistance);
+        SpawnItemOnTerrain(gemPrefab, GemAmount, "Gem", minDistance, maxDistance);
+        SpawnItemOnTerrain(starPrefab, StarAmount, "Star", minDistance, maxDistance);
     }
     public void GenerateMap()
     {
@@ -113,7 +115,7 @@ public class MapGenerator : MonoBehaviour
         Vector3 spawnPosition = new Vector3(x, y, z);
         Instantiate(player, spawnPosition, Quaternion.identity);
     }
-    private void SpawnItemOnTerrain(GameObject itemPrefab, int amount, string tag, float minDistance)
+    private void SpawnItemOnTerrain(GameObject itemPrefab, int amount, string tag, float minDistance, float maxDistance)
     {
         for (int i = 0; i < amount; i++)
         {

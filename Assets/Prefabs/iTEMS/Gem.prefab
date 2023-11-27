@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3012585017322469087}
   - component: {fileID: 3237275988134300278}
   - component: {fileID: 7297054569901496476}
+  - component: {fileID: -112321100410385950}
   m_Layer: 0
   m_Name: Gem
   m_TagString: Gem
@@ -115,3 +116,19 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!208 &-112321100410385950
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234106981328359482}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.1550001, y: 0.41700003, z: 1.098}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.116000004}
+  m_TimeToStationary: 0.5
