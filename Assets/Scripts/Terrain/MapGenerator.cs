@@ -47,6 +47,7 @@ public class MapGenerator : MonoBehaviour
 
         meshFilter = GetComponent<MeshFilter>();
         meshCollider.sharedMesh = meshFilter.sharedMesh;
+        SpawnPlayerOnTerrain();
     }
     public void GenerateMap()
     {
@@ -87,13 +88,15 @@ public class MapGenerator : MonoBehaviour
             display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap,meshHeightMultiplier,meshHeightCurve,meshCollider), TextureGenerator.TextureFromColourMap(colourMap, mapWidth, mapHeight));
         }
 
-        SpawnPlayerOnTerrain();
+       
     }
     private void SpawnPlayerOnTerrain()
     {
-        // Choose a position to spawn the player (example: center of the map)
-        float x = mapWidth / 2f;
-        float z = mapHeight / 2f;
+        // Randomly choose a position within the specified range
+        float x = Random.Range(-26f, 26f); // Range for x coordinate
+        float z = Random.Range(-26f, 26f); // Range for z coordinate
+
+        // Get the terrain height at this point
         float y = GetTerrainHeightAtPoint(x, z);
 
         // Spawn the player at the calculated position
