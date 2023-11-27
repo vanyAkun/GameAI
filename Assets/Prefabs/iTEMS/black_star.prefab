@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3057842747724869540}
   - component: {fileID: 6853037244778121750}
   - component: {fileID: 8656892352414559509}
+  - component: {fileID: -5638102649521602853}
   m_Layer: 0
   m_Name: black_star
   m_TagString: EnemyStar
@@ -28,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 409728175072267378}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -10.2300625, y: 11.989495, z: 2.3097787}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -108,3 +109,19 @@ MonoBehaviour:
   endScale: {x: 1.5, y: 1.5, z: 1.5}
   scaleSpeed: 1
   scaleRate: 0.5
+--- !u!208 &-5638102649521602853
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409728175072267378}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.6070001, y: 0.26200002, z: 1.5280001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.16100001}
+  m_TimeToStationary: 0.5

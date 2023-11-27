@@ -9,8 +9,8 @@ public class MapGenerator : MonoBehaviour
     public enum DrawMode { noiseMap, ColourMap, Mesh};
     public DrawMode drawMode;
 
-    public int mapWidth;
-    public int mapHeight;
+    int mapWidth;
+    int mapHeight;
     public float noiseScale;
 
     public bool autoUpdate;
@@ -25,6 +25,7 @@ public class MapGenerator : MonoBehaviour
     public Vector2 offset;
     public float meshHeightMultiplier;
     public AnimationCurve meshHeightCurve;
+    public AnimationCurve heightCurve;
 
     public NavMeshSurface navMeshSurface;
     public MeshCollider meshCollider;
@@ -44,8 +45,9 @@ public class MapGenerator : MonoBehaviour
     public int nOfEnemyStars = 5;
     public int nOfChests = 5;
 
-    public float minDistance = 10f;
-    public float maxDistance = 25f;
+    public float minDistance = 5f;
+    public float maxDistance = 15f;
+
 
     private void Awake()
     {
@@ -126,25 +128,32 @@ public class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i < nOfTrees; i++)
         {
-            bool ItemTooClose = false;
-            float randomX = Random.Range(0f, mapWidth);
-            float randomY = Random.Range(0f, mapHeight);
-            Vector3 randomPosition = new Vector3(randomX, 0f, randomY);
+            bool itemTooClose;
+            Vector3 treePosition;
 
-            foreach (GameObject tree in GameObject.FindGameObjectsWithTag("Tree"))
+            do
             {
-                if (Vector3.Distance(tree.transform.position, randomPosition) < minDistance)
+                itemTooClose = false;
+
+                // Generate random position within the specified boundaries
+                float randomX = Random.Range(-26f, 26f); // X-axis: -26 to 26
+                float randomY = Random.Range(-26f, 26f); // Z-axis: -26 to 26
+                float height = SampleTerrain(randomX, randomY);
+
+                treePosition = new Vector3(randomX, height, randomY);
+
+                // Check for minimum distance from other trees
+                foreach (GameObject tree in GameObject.FindGameObjectsWithTag("Tree"))
                 {
-                    ItemTooClose = true;
-                    break;
+                    if (Vector3.Distance(tree.transform.position, treePosition) < minDistance)
+                    {
+                        itemTooClose = true;
+                        break;
+                    }
                 }
-            }
+            } while (itemTooClose);
 
-            if (!ItemTooClose)
-            {
-                Vector3 treePosition = new Vector3(randomX, SampleTerrain(randomX, randomY), randomY);
-                Instantiate(treePrefab, treePosition, Quaternion.identity);
-            }
+            Instantiate(treePrefab, treePosition, Quaternion.identity);
         }
     }
     private void HeartsSpawn()
@@ -272,6 +281,27 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
+    private float SampleTerrain(float x, float y)
+    {
+        // Ensure x and y are within the bounds of the map
+        int mapX = Mathf.Clamp((int)x, 0, mapWidth - 1);
+        int mapY = Mathf.Clamp((int)y, 0, mapHeight - 1);
+
+        // Generate the noise map if it doesn't exist
+        if (noiseMap == null)
+        {
+            noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset);
+        }
+
+        // Retrieve the height value from the noise map
+        float heightValue = noiseMap[mapX, mapY];
+
+        // Apply the height multiplier and the height curve
+        return heightCurve.Evaluate(heightValue) * meshHeightMultiplier;
+    }
+
+    // Add a private field to store the noise map
+    private float[,] noiseMap;
 }
 [System.Serializable]
 public struct TerrainType
