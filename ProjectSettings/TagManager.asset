@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Seeker
   - Bullet
+  - Target
+  - Tree
+  - Star
+  - Heart
+  - Gem
   layers:
   - Default
   - TransparentFX

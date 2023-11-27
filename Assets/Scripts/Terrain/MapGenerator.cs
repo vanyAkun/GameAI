@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
@@ -30,12 +31,13 @@ public class MapGenerator : MonoBehaviour
     public MeshCollider meshCollider;
     public MeshFilter meshFilter;
 
+    public GameObject player;
+    public GameObject NPC;
     public GameObject heartPrefab;
     public GameObject starPrefab;
     public GameObject treePrefab;
     public GameObject gemPrefab;
-    public GameObject enemyGemPrefab;
-    public GameObject chestPrefab;
+   
 
 
     private void Awake()
