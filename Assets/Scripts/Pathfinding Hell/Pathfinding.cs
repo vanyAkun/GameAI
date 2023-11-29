@@ -25,7 +25,7 @@ public class Pathfinding : MonoBehaviour
 
             // Check distance between seeker and target
             if (Vector3.Distance(seeker.position, currentTarget.position) < 1.0f)
-            { // You can adjust the 1.0f to your desired distance
+            { 
                 DestroyTarget();
             }
         }
