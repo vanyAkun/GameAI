@@ -8,6 +8,7 @@ public class Pathfinding : MonoBehaviour
 
     public Transform seeker;
     public Transform currentTarget;
+    public GameObject markerPrefab;
 
     Grid grid;
 
@@ -94,6 +95,32 @@ public class Pathfinding : MonoBehaviour
 
         grid.path = path;
 
+        // Now call the method to show the markers
+        ShowPathMarkers(path);
+    }
+    private void ShowPathMarkers(List<Node> path)
+    {
+        float elevationAboveTerrain = 5f; // Adjust this value as needed
+
+        // Clear existing markers if any
+        ClearPathMarkers();
+
+        foreach (Node node in path)
+        {
+            Vector3 elevatedPosition = node.worldPosition + Vector3.up * elevationAboveTerrain;
+            GameObject marker = Instantiate(markerPrefab, elevatedPosition, Quaternion.identity);
+            marker.transform.parent = this.transform; // Optional: Set the parent of the marker to keep the hierarchy clean
+        }
+    }
+    private void ClearPathMarkers()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.CompareTag("PathMarker")) // Ensure your marker prefabs are tagged "PathMarker"
+            {
+                Destroy(child.gameObject);
+            }
+        }
     }
     private void DestroyTarget()
     {

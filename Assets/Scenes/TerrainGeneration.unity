@@ -2075,6 +2075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seeker: {fileID: 535050205}
   currentTarget: {fileID: 0}
+  markerPrefab: {fileID: 5915312990123424733, guid: 7be44a8bb25da4246bcdbcb6eb89f4ed, type: 3}
 --- !u!1 &1836833951 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6579714462623027940, guid: fbf79c82de11f4d44937e154ae780852, type: 3}
@@ -2263,13 +2264,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1611481560}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1611481561}
+        m_TargetAssemblyTypeName: Grid, Assembly-CSharp
+        m_MethodName: ToggleGizmosVisibility
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
