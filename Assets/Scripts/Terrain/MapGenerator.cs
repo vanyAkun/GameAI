@@ -32,9 +32,6 @@ public class MapGenerator : MonoBehaviour
     public MeshCollider meshCollider;
     public MeshFilter meshFilter;
 
-    public GameObject player;
-    public GameObject NPC;
-
     public GameObject heartPrefab;
     public GameObject starPrefab;
     public GameObject treePrefab;
@@ -54,9 +51,9 @@ public class MapGenerator : MonoBehaviour
 
         meshFilter = GetComponent<MeshFilter>();
         meshCollider.sharedMesh = meshFilter.sharedMesh;
-        SpawnPlayerOnTerrain();
+
+
         float minDistance = 5f;
-        float maxDistance = 15f;// Adjust this value as needed
         SpawnItemOnTerrain(heartPrefab, HeartAmount, "Heart", minDistance);
         SpawnItemOnTerrain(treePrefab, TreeAmount, "Tree", minDistance);
         SpawnItemOnTerrain(gemPrefab, GemAmount, "Gem", minDistance);
@@ -103,20 +100,8 @@ public class MapGenerator : MonoBehaviour
 
        
     }
-    private void SpawnPlayerOnTerrain()
-    {
-        // Randomly choose a position within the specified range
-        float x = Random.Range(-26f, 26f); // Range for x coordinate
-        float z = Random.Range(-26f, 26f); // Range for z coordinate
+   
 
-        // Get the terrain height at this point
-        float y = GetTerrainHeightAtPoint(x, z);
-
-        // Spawn the player at the calculated position
-        Vector3 spawnPosition = new Vector3(x, y, z);
-        Instantiate(player, spawnPosition, Quaternion.identity);
-        playerSpawnPosition = spawnPosition;
-    }
     private void SpawnItemOnTerrain(GameObject itemPrefab, int amount, string tag, float minDistance)
     {
         for (int i = 0; i < amount; i++)
