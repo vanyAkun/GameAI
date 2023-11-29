@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6040020149309393809}
   - component: {fileID: 6984036342407927670}
   - component: {fileID: 2811377837185226509}
-  - component: {fileID: 6951973925071252269}
   - component: {fileID: 2633672963972688056}
   - component: {fileID: 5915234054444729444}
   - component: {fileID: 236803776712512190}
@@ -89,36 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6951973925071252269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670708093994714235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82931985446986f46ab978c348045696, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PatrolPoints:
-  - {x: 12, y: 0, z: 12}
-  - {x: -12, y: 0, z: 12}
-  - {x: -12, y: 0, z: -12}
-  - {x: 12, y: 0, z: -12}
-  Player: {fileID: 0}
-  Bullet: {fileID: 738217410181140050, guid: 490e635907fc58c488c768daa3fa2a24, type: 3}
-  PatrolMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  ChaseMaterial: {fileID: 2100000, guid: 3aad97ff5c9e00748afe5d45ee4ee260, type: 2}
-  AttackMaterial: {fileID: 2100000, guid: 50d3129567446f440b6b73122497fd90, type: 2}
-  RetreatMaterial: {fileID: 0}
-  ChaseRange: 7
-  AttackRange: 4
-  bulletPosition: {fileID: 0}
-  bulletPrefab: {fileID: 7821730813202215378, guid: 16ddb59c794fb4a4ca066046f14fed66,
-    type: 3}
-  health: 100
-  healthBar: {fileID: 0}
 --- !u!65 &2633672963972688056
 BoxCollider:
   m_ObjectHideFlags: 0

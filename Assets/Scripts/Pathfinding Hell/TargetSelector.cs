@@ -4,32 +4,26 @@ using UnityEngine;
 
 public class TargetSelector : MonoBehaviour
 {
-    public Pathfinding pathfinder;
-    private Transform selectedTarget = null;
+
+    public Pathfinding pathfinder; // Reference to the pathfinding script
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // Left click for selecting target
-        {
+        if (Input.GetMouseButtonDown(0))
+        { // On left mouse click
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
             {
-                Transform hitTarget = hit.transform;
-                if (hitTarget.CompareTag("Target"))
-                {
-                    selectedTarget = hitTarget;
+                Transform selectedTarget = hit.transform;
+                // Check if the clicked object is a valid target
+                if (selectedTarget.CompareTag("Target"))
+                { // Make sure targets have the tag "Target"
                     pathfinder.SetTarget(selectedTarget);
                 }
             }
         }
-
-        if (Input.GetMouseButtonDown(1) && selectedTarget != null) // Right click for moving to target
-        {
-            pathfinder.MoveToTarget();
-        }
     }
+
 }
-
-
