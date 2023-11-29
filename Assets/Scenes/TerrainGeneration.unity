@@ -2266,7 +2266,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1611481561}
         m_TargetAssemblyTypeName: Grid, Assembly-CSharp
-        m_MethodName: ToggleGizmosVisibility
+        m_MethodName: ToggleMarkerVisibility
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

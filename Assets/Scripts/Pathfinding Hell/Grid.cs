@@ -100,9 +100,12 @@ public class Grid : MonoBehaviour {
 		}
 
 	}
-    public void ToggleGizmosVisibility()
-    {
-        showGizmos = !showGizmos;
+    public void ToggleMarkerVisibility()
+     {
+        GameObject[] markers = GameObject.FindGameObjectsWithTag("PathMarker");
+        foreach (var marker in markers)
+        {
+            marker.SetActive(!marker.activeSelf);
+        }
     }
-
 }
