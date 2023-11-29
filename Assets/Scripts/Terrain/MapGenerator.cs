@@ -58,6 +58,10 @@ public class MapGenerator : MonoBehaviour
         SpawnItemOnTerrain(gemPrefab, GemAmount, "Gem", minDistance);
         SpawnItemOnTerrain(starPrefab, StarAmount, "Star", minDistance);
     }
+    private void Start()
+    {
+        GenerateMap();
+    }
     public void GenerateMap()
     {
         float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight,seed, noiseScale,octaves,persistance,lacunarity,offset);
