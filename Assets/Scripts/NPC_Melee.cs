@@ -4,6 +4,7 @@ using TMPro;
 
 public class NPC_Melee : MonoBehaviour
 {
+    #region Variables
     public TextMeshProUGUI stateText;
     public TextMeshProUGUI healthText;
     public string npcID = "NPC_Melee";
@@ -32,7 +33,7 @@ public class NPC_Melee : MonoBehaviour
     private int nextPatrolPoint = 0;
     private float lastAttackTime = 0;
     public int health = 100;
-
+    #endregion
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();

@@ -60,7 +60,7 @@ public class NPC : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
-            return; // Ensure no further code is executed after destruction
+            return; 
         }
 
         if (health <= 20 && currentState != NPCStates.HealRetreat)
@@ -69,7 +69,7 @@ public class NPC : MonoBehaviour
         }
         else
         {
-            SwitchState(); // Use the probability-based method
+            SwitchState(); 
         }
 
         UpdateStateText();
@@ -123,35 +123,35 @@ public class NPC : MonoBehaviour
 
     private void Attack()
     {
-        navMeshAgent.ResetPath(); // Reset the NPC's path
-        navMeshAgent.isStopped = true; // Explicitly stop the NPC's movement
+        navMeshAgent.ResetPath(); 
+        navMeshAgent.isStopped = true; 
         meshRenderer.material = AttackMaterial; // Change material to attack material
-        transform.LookAt(Player); // Ensure the NPC looks at the player
+        transform.LookAt(Player); 
 
-        Fire(); // Attempt to fire a bullet
+        Fire(); 
 
-        // Check if the player is out of attack range
+        // Check ifplayer is out of attack range
         if (Vector3.Distance(transform.position, Player.position) > AttackRange)
         {
-            navMeshAgent.isStopped = false; // Allow the NPC to move again
+            navMeshAgent.isStopped = false; // Allow NPC to move again
             currentState = NPCStates.Chase;
         }
     }
 
     private void Chase()
     {
-        meshRenderer.material = ChaseMaterial; // Change material to chase material
-        navMeshAgent.SetDestination(Player.position); // Set destination to player's position
+        meshRenderer.material = ChaseMaterial; 
+        navMeshAgent.SetDestination(Player.position); 
 
-        // Check if player is within attack range
+       
         if (Vector3.Distance(transform.position, Player.position) <= AttackRange)
         {
             currentState = NPCStates.Attack;
         }
-        // Check if player is out of chase range
+
         else if (Vector3.Distance(transform.position, Player.position) > ChaseRange)
         {
-            navMeshAgent.ResetPath(); // Reset the path
+            navMeshAgent.ResetPath(); 
             currentState = NPCStates.Patrol;
         }
     }
@@ -161,15 +161,15 @@ public class NPC : MonoBehaviour
         if (Vector3.Distance(transform.position, Player.position) < ChaseRange)
         {
             currentState = NPCStates.Chase;
-            return; // Exit the method to avoid executing remaining code when state changes
+            return; 
         }
 
-        // If the NPC is not moving
+        
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance < 0.5f)
         {
-            meshRenderer.material = PatrolMaterial; // Change material to patrol material
+            meshRenderer.material = PatrolMaterial; 
 
-            // Increment patrol point and reset if needed
+ 
             nextPatrolPoint = (nextPatrolPoint + 1) % PatrolPoints.Length;
             navMeshAgent.SetDestination(PatrolPoints[nextPatrolPoint]);
         }
@@ -181,7 +181,7 @@ public class NPC : MonoBehaviour
         int farthestPointIndex = 0;
         float maxDistance = 0;
 
-        // Find the farthest patrol point from the player
+       
         for (int i = 0; i < PatrolPoints.Length; i++)
         {
             float distance = Vector3.Distance(PatrolPoints[i], Player.position);
@@ -192,17 +192,17 @@ public class NPC : MonoBehaviour
             }
         }
 
-        // Set the destination to the farthest patrol point
-        navMeshAgent.isStopped = false; // Ensure the agent can move
+       
+        navMeshAgent.isStopped = false; 
         navMeshAgent.SetDestination(PatrolPoints[farthestPointIndex]);
-        meshRenderer.material = RetreatMaterial; // Change to retreat material
+        meshRenderer.material = RetreatMaterial; 
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance < 0.5f)
         {
-            currentState = NPCStates.Patrol; // Transition back to Patrol state
-            meshRenderer.material = PatrolMaterial; // Change material to patrol material
-            navMeshAgent.SetDestination(PatrolPoints[nextPatrolPoint]); // Reset to the next patrol point
+            currentState = NPCStates.Patrol;
+            meshRenderer.material = PatrolMaterial; 
+            navMeshAgent.SetDestination(PatrolPoints[nextPatrolPoint]); 
         }
-        // Debugging
+
         Debug.Log("Retreating to point: " + farthestPointIndex);
     }
     private void HealRetreat()
@@ -219,22 +219,22 @@ public class NPC : MonoBehaviour
             }
         }
 
-        // Set the destination to the farthest patrol point
+       
         navMeshAgent.isStopped = false;
         navMeshAgent.SetDestination(PatrolPoints[farthestPointIndex]);
-        meshRenderer.material = RetreatMaterial; // You can choose to have a different material for HealRetreat if you like
+        meshRenderer.material = RetreatMaterial; 
 
-        // Check if NPC has reached the retreat point and heal if necessary
+       
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance < 0.5f)
         {
             if (health < 100)
             {
-                health++; // Slowly regenerate health
+                health++; 
             }
             else
             {
-                currentState = NPCStates.Patrol; // Return to patrol once healed
-                meshRenderer.material = PatrolMaterial; // Reset material to patrol material
+                currentState = NPCStates.Patrol; 
+                meshRenderer.material = PatrolMaterial; 
             }
         }
     }
@@ -243,15 +243,15 @@ public class NPC : MonoBehaviour
         if (stateText != null)
         {
             stateText.text = $" State: {currentState}";
-            Debug.Log("Updated Text: " + stateText.text); // Debugging line
+            Debug.Log("Updated Text: " + stateText.text); 
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Seeker")) // Make sure the player has a tag "Player"
+        if (other.gameObject.CompareTag("Seeker")) 
         {
-            currentState = NPCStates.Retreat; // Change state to Retreat
+            currentState = NPCStates.Retreat; 
         }
     
     }

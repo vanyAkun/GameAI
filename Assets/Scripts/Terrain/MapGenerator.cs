@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class MapGenerator : MonoBehaviour
 {
-
+    #region Variables
     public enum DrawMode { noiseMap, ColourMap, Mesh};
     public DrawMode drawMode;
 
@@ -40,38 +40,50 @@ public class MapGenerator : MonoBehaviour
     public int GemAmount = 3;
     public int StarAmount = 7;
     private Vector3 playerSpawnPosition;
-
-    public void SpawnExtraGems()
-    {
-        SpawnItemOnTerrain(gemPrefab, 6, "Gem", 5f); // Spawning 6 gems
-    }
-    public void ClearGems()
-    {
-        GameObject[] gems = GameObject.FindGameObjectsWithTag("Gem");
-        foreach (GameObject gem in gems)
-        {
-            Destroy(gem);
-        }
-    }
+    #endregion
+    #region Unity Methods
     private void Awake()
     {
-       navMeshSurface = GetComponent<NavMeshSurface>();
+        navMeshSurface = GetComponent<NavMeshSurface>();
         meshCollider = GetComponent<MeshCollider>();
 
         meshFilter = GetComponent<MeshFilter>();
         meshCollider.sharedMesh = meshFilter.sharedMesh;
 
-
-        float minDistance = 5f;
-        SpawnItemOnTerrain(heartPrefab, HeartAmount, "Heart", minDistance);
-        SpawnItemOnTerrain(treePrefab, TreeAmount, "Tree", minDistance);
-        SpawnItemOnTerrain(gemPrefab, GemAmount, "Gem", minDistance);
-        SpawnItemOnTerrain(starPrefab, StarAmount, "Star", minDistance);
+        SpawnAllItems();
     }
     private void Start()
     {
         GenerateMap();
     }
+    #endregion
+    #region Custom Methods
+    public void SpawnAllItems()
+    {
+        float minDistance = 5f;
+        SpawnItemOnTerrain(heartPrefab, HeartAmount, "Heart", minDistance);
+        SpawnItemOnTerrain(starPrefab, StarAmount, "Star", minDistance);
+        SpawnItemOnTerrain(treePrefab, TreeAmount, "Tree", minDistance);
+        SpawnItemOnTerrain(gemPrefab, GemAmount, "Gem", minDistance);
+    }
+
+    public void ClearAllItems()
+    {
+        ClearItemsWithTag("Heart");
+        ClearItemsWithTag("Star");
+        ClearItemsWithTag("Tree");
+        ClearItemsWithTag("Gem");
+    }
+
+    private void ClearItemsWithTag(string tag)
+    {
+        GameObject[] items = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject item in items)
+        {
+            Destroy(item);
+        }
+    }
+
     public void GenerateMap()
     {
         float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight,seed, noiseScale,octaves,persistance,lacunarity,offset);
@@ -114,7 +126,6 @@ public class MapGenerator : MonoBehaviour
        
     }
    
-
     private void SpawnItemOnTerrain(GameObject itemPrefab, int amount, string tag, float minDistance)
     {
         for (int i = 0; i < amount; i++)
@@ -198,7 +209,7 @@ public class MapGenerator : MonoBehaviour
             octaves = 0;
         }
     }
-  
+    #endregion
 }
 [System.Serializable]
 public struct TerrainType

@@ -95,28 +95,28 @@ public class Pathfinding : MonoBehaviour
 
         grid.path = path;
 
-        // Now call the method to show the markers
+      
         ShowPathMarkers(path);
     }
     private void ShowPathMarkers(List<Node> path)
     {
-        float elevationAboveTerrain = 5f; // Adjust this value as needed
+        float elevationAboveTerrain = 5f;
 
-        // Clear existing markers if any
+       
         ClearPathMarkers();
 
         foreach (Node node in path)
         {
             Vector3 elevatedPosition = node.worldPosition + Vector3.up * elevationAboveTerrain;
             GameObject marker = Instantiate(markerPrefab, elevatedPosition, Quaternion.identity);
-            marker.transform.parent = this.transform; // Optional: Set the parent of the marker to keep the hierarchy clean
+            marker.transform.parent = this.transform; 
         }
     }
     private void ClearPathMarkers()
     {
         foreach (Transform child in transform)
         {
-            if (child.CompareTag("PathMarker")) // Ensure your marker prefabs are tagged "PathMarker"
+            if (child.CompareTag("PathMarker")) 
             {
                 Destroy(child.gameObject);
             }
@@ -126,14 +126,14 @@ public class Pathfinding : MonoBehaviour
     {
         if (currentTarget != null)
         {
-            Destroy(currentTarget.gameObject); // Destroy the target GameObject
-            currentTarget = null; // Reset the target
+            Destroy(currentTarget.gameObject); 
+            currentTarget = null; 
 
             var agent = seeker.GetComponent<NavMeshAgent>();
             if (agent != null)
             {
-                agent.ResetPath(); // Clear the NavMeshAgent's current path
-                agent.isStopped = true; // Optionally stop the NavMeshAgent if needed
+                agent.ResetPath(); 
+                agent.isStopped = true; 
             }
         }
     }
@@ -153,7 +153,7 @@ public class Pathfinding : MonoBehaviour
             var agent = seeker.GetComponent<NavMeshAgent>();
             if (agent != null)
             {
-                agent.isStopped = false; // Ensure the agent is not stopped
+                agent.isStopped = false; 
                 agent.SetDestination(currentTarget.position);
             }
         }

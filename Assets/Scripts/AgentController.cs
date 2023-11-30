@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class AgentController : MonoBehaviour
 {
+    #region Variables
     public float movementSpeed = 10f;
     Vector3 movementDirection;
 
@@ -20,7 +21,7 @@ public class AgentController : MonoBehaviour
     public int health = 100;
 
     public Slider healthBar;
-
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -56,9 +57,6 @@ public class AgentController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
             Fire();
     }
-
-
-
 
     void Fire()
     {
@@ -96,12 +94,9 @@ public class AgentController : MonoBehaviour
     }
     void Respawn()
     {
-        // Respawn logic here. This could be as simple as resetting the health
-        // and placing the character back at a start position.
         health = 100;
         healthBar.value = 1;
-        //transform.position = /* Your respawn position here */
-        // You might also want to reset other states or properties.
+
     }
 
 }

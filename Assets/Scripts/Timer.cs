@@ -4,11 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
-    public float timeRemaining = 30f; // Set the starting time here
+    public float timeRemaining = 30f; 
     public bool timerIsRunning = false;
     public TextMeshProUGUI timeText;
     public GameObject targetNPC;
-    public GameObject player; // Assign a UI Text element for displaying the timer
+    public GameObject player; 
 
     void Update()
     {
@@ -31,7 +31,7 @@ public class Timer : MonoBehaviour
     {
         if (targetNPC != null && targetNPC.activeSelf)
         {
-            // NPC is still alive, player fails the challenge
+            
             OnPlayerDeath();
         }
     }

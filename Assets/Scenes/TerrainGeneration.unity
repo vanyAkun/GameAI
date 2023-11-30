@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 39693658}
   - component: {fileID: 39693657}
   m_Layer: 0
-  m_Name: Coin (2)
+  m_Name: Target_3
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1242,7 +1242,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Spawn Gems
+  m_text: Spawn Items
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1440,7 +1440,7 @@ GameObject:
   - component: {fileID: 1241393104}
   - component: {fileID: 1241393103}
   m_Layer: 0
-  m_Name: Coin (1)
+  m_Name: Target_1
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1628,7 +1628,7 @@ GameObject:
   - component: {fileID: 1289534329}
   - component: {fileID: 1289534330}
   m_Layer: 0
-  m_Name: Coin
+  m_Name: Target_0
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2854,7 +2854,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1836833963}
         m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
-        m_MethodName: ClearGems
+        m_MethodName: ClearAllItems
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2993,7 +2993,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Clear Gems
+  m_text: Clear Items
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3155,7 +3155,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1836833963}
         m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
-        m_MethodName: SpawnExtraGems
+        m_MethodName: SpawnAllItems
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

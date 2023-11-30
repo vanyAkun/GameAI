@@ -101,7 +101,7 @@ public class NPCBIG : MonoBehaviour
 
     private void Chase()
     {
-        meshRenderer.material = AttackMaterial; // Using attack material for visual consistency
+        meshRenderer.material = AttackMaterial; 
         navMeshAgent.isStopped = false;
         navMeshAgent.SetDestination(Player.position);
 
@@ -116,7 +116,7 @@ public class NPCBIG : MonoBehaviour
         if (stateText != null)
         {
             stateText.text = $" State: {currentState}";
-            Debug.Log("Updated Text: " + stateText.text); // Debugging line
+            Debug.Log("Updated Text: " + stateText.text); 
         }
     }
 
