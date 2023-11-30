@@ -44,7 +44,11 @@ public class NPC : MonoBehaviour
     public GameObject bulletPrefab;
     public int health = 100;
 
-   
+    public NPC leader;
+    public float formationFollowDistance = 5f;  // Distance to maintain from the leader
+    private bool isLeader = false;
+
+
 
     void Start()
     {
@@ -52,6 +56,8 @@ public class NPC : MonoBehaviour
      
         navMeshAgent.SetDestination(PatrolPoints[nextPatrolPoint]);
         meshRenderer = GetComponent<MeshRenderer>();
+
+        isLeader = leader == null;
     }
     
     
@@ -82,9 +88,32 @@ public class NPC : MonoBehaviour
                 healthText.text = "HP " + health;
             }
         }
-    
+        if (!isLeader && leader != null)
+        {
+            SyncStateWithLeader();
+        }
+
     }
 
+    private void SyncStateWithLeader()
+    {
+        if (leader.currentState == NPCStates.Attack)
+        {
+            // If this NPC is not already in Chase or Attack state, switch to Chase
+            if (currentState != NPCStates.Chase && currentState != NPCStates.Attack)
+            {
+                currentState = NPCStates.Chase;
+                // Set the destination to the player's position
+                navMeshAgent.SetDestination(Player.position);
+            }
+
+            // If this NPC is close enough to the player, switch to Attack
+            if (Vector3.Distance(transform.position, Player.position) <= AttackRange)
+            {
+                currentState = NPCStates.Attack;
+            }
+        }
+    }
     void Fire()
     {
         if (Time.time > nextFire)
