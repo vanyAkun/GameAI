@@ -263,17 +263,35 @@ public class NPC : MonoBehaviour
             TakeDamage(bullet.damage);
         }
     }
-    void TakeDamage(int damage)
+    void TakeDamage(int baseDamage)
     {
-        Debug.Log("Damage Taken: " + damage);
-        health -= damage;
-        Debug.Log("New Health: " + health);
+        int actualDamage = CalculateActualDamage(baseDamage);
+        health -= actualDamage;
+
         if (healthText != null)
         {
             healthText.text = "HP " + health;
         }
 
-       
+        Debug.Log("Damage Taken: " + actualDamage);
+        Debug.Log("New Health: " + health);
+    }
+    int CalculateActualDamage(int baseDamage)
+    {
+        float probabilityFactor = UnityEngine.Random.Range(0f, 1f);
+        switch (currentState)
+        {
+            case NPCStates.Retreat:
+            case NPCStates.HealRetreat:
+                // Less likely to take full damage in retreat states
+                return probabilityFactor < 0.5f ? baseDamage / 2 : baseDamage;
+            case NPCStates.Attack:
+                // More likely to take full damage in attack state
+                return probabilityFactor < 0.8f ? baseDamage : baseDamage / 2;
+            default:
+                // Standard damage calculation for other states
+                return baseDamage;
+        }
     }
 }
 
