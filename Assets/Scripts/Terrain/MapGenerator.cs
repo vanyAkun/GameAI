@@ -45,7 +45,14 @@ public class MapGenerator : MonoBehaviour
     {
         SpawnItemOnTerrain(gemPrefab, 6, "Gem", 5f); // Spawning 6 gems
     }
-
+    public void ClearGems()
+    {
+        GameObject[] gems = GameObject.FindGameObjectsWithTag("Gem");
+        foreach (GameObject gem in gems)
+        {
+            Destroy(gem);
+        }
+    }
     private void Awake()
     {
        navMeshSurface = GetComponent<NavMeshSurface>();
