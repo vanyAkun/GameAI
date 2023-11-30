@@ -41,7 +41,10 @@ public class MapGenerator : MonoBehaviour
     public int StarAmount = 7;
     private Vector3 playerSpawnPosition;
 
-
+    public void SpawnExtraGems()
+    {
+        SpawnItemOnTerrain(gemPrefab, 6, "Gem", 5f); // Spawning 6 gems
+    }
 
     private void Awake()
     {
@@ -188,6 +191,7 @@ public class MapGenerator : MonoBehaviour
             octaves = 0;
         }
     }
+  
 }
 [System.Serializable]
 public struct TerrainType
